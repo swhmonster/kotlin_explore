@@ -10,6 +10,7 @@ enum class TableEnum(val tableName: String, val serviceName: String) {
     GLOBAL_USER_ADDRESS_SNAPSHOT("__test_global_user_address_snapshot", "globalUserAddressSnapshot");
 
     companion object {
+        @JvmStatic
         fun getServiceName(table: String): String {
             for (value in TableEnum.values()) {
                 if (value.tableName == table) {
