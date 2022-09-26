@@ -1,7 +1,5 @@
 package com.alibaba.middleware.jingwei.enums
 
-import org.jetbrains.kotlin.org.apache.commons.lang3.StringUtils
-
 
 /**
  * @author  道禹 Walter
