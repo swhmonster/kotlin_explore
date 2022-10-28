@@ -33,12 +33,6 @@
             <artifactId>kotlin-stdlib-jdk8</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.experimental</groupId>
-            <artifactId>spring-native</artifactId>
-            <version>${spring-native.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
@@ -63,6 +57,21 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-main-kts</artifactId>
             <version>1.7.20-RC</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.3.16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>5.3.22</version>
         </dependency>
     </dependencies>
 
@@ -108,25 +117,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <plugin>
-                <groupId>org.springframework.experimental</groupId>
-                <artifactId>spring-aot-maven-plugin</artifactId>
-                <version>${spring-native.version}</version>
-                <executions>
-                    <execution>
-                        <id>test-generate</id>
-                        <goals>
-                            <goal>test-generate</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>generate</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
     <repositories>
@@ -167,23 +157,32 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.graalvm.buildtools</groupId>
-                        <artifactId>native-maven-plugin</artifactId>
-                        <version>${native-buildtools.version}</version>
-                        <extensions>true</extensions>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.5.1</version>
                         <executions>
+                            <!-- Replacing default-compile as it is treated specially by maven -->
                             <execution>
-                                <id>test-native</id>
-                                <phase>test</phase>
+                                <id>default-compile</id>
+                                <phase>none</phase>
+                            </execution>
+                            <!-- Replacing default-testCompile as it is treated specially by maven -->
+                            <execution>
+                                <id>default-testCompile</id>
+                                <phase>none</phase>
+                            </execution>
+                            <execution>
+                                <id>java-compile</id>
+                                <phase>compile</phase>
                                 <goals>
-                                    <goal>test</goal>
+                                    <goal>compile</goal>
                                 </goals>
                             </execution>
                             <execution>
-                                <id>build-native</id>
-                                <phase>package</phase>
+                                <id>java-test-compile</id>
+                                <phase>test-compile</phase>
                                 <goals>
-                                    <goal>build</goal>
+                                    <goal>testCompile</goal>
                                 </goals>
                             </execution>
                         </executions>
